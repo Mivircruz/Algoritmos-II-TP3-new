@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 class Vertice(object):
 
     def __init__(self, ciudad, latitud, longitud):
