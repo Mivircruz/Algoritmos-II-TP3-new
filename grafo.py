@@ -41,8 +41,7 @@ class Grafo(object):
 		return self.vertices[codigo1].son_adyacentes(codigo2)
 
 	def obtener_vertice_random(self):
-		codigo_random = random.choice(list(self.vertices))
-		return self.vertices.get(codigo_random)
+		return random.choice(list(self.vertices))
 
 	def obtener_largo(self):
 		return len(self.vertices)
