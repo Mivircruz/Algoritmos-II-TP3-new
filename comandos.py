@@ -169,10 +169,9 @@ def recorrer_mundo_aprox(grafo, linea):
     costo = funciones.recorrer_lugares(grafo, lugares, aeropuerto_random, 0, visitados)
 
     while visitados:
-        aeropuerto = visitados.pop()
-        if len(visitados) > 1:
-            print(aeropuerto, end=" ")
-            print("->", end=" ")
+        aeropuerto = visitados.pop(0)
+        if len(visitados) >= 1:
+            print(aeropuerto + " ->", end=" ")
         else:
             print(aeropuerto)
     print("Costo: ", costo)
