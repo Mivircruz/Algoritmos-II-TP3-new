@@ -172,7 +172,7 @@ def recorrer_mundo_aprox(grafo, linea):
         aeropuerto = visitados.pop()
         if len(visitados) > 1:
             print(aeropuerto, end=" ")
-            print(" -> ", end=" ")
+            print("->", end=" ")
         else:
             print(aeropuerto)
     print("Costo: ", costo)
