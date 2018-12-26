@@ -253,7 +253,7 @@ def nueva_aerolinea(grafo, linea):
             ady_no_visitados.append(key)
         adyacente = random.choice(ady_no_visitados)
         peso = grafo.obtener_peso(aeropuerto_actual, adyacente)
-        archivo.write(aeropuerto_actual+','+adyacente+','+str(peso[0])+'\n')
+        archivo.write(aeropuerto_actual + ',' + adyacente + ',' + str(peso[0]) + ',' + str(peso[1]) + ',' + str(peso[2]))
         por_visitar.remove(aeropuerto_actual)
         aeropuerto_actual = adyacente
 
