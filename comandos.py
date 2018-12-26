@@ -160,13 +160,13 @@ def recorrer_mundo_aprox(grafo, linea):
     for vertice in grafo.obtener_todos_vertices_valores():
         lugares.append(vertice.obtener_ciudad())
     visitados = []
-    costo = 0
+
 
     if len(list(grafo.obtener_aeropuertos(origen))) == 0:
         return False
 
     aeropuerto_random = random.choice(list(grafo.obtener_aeropuertos(origen)))
-    funciones.recorrer_lugares(grafo, lugares, aeropuerto_random, costo, visitados)
+    costo = funciones.recorrer_lugares(grafo, lugares, aeropuerto_random, 0, visitados)
 
     while visitados:
         aeropuerto = visitados.pop()

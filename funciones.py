@@ -179,7 +179,7 @@ def recorrido_vacaciones(grafo, origen, v, contador, n, visitados):
 
 def recorrer_lugares(grafo, lugares, actual, costo, visitados):
     if len(lugares) == 0:
-        return True
+        return costo
 
     ciudad_aleatoria = random.choice(lugares)
     padres, distancia, peso_total, aeropuerto_destino = camino_minimo(grafo, actual, ciudad_aleatoria, "rapido")
