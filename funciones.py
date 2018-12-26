@@ -5,6 +5,7 @@ import math
 import grafo as g
 import vertice as v
 import operator
+import random
 
 def obtener_parametros(linea):
 
@@ -180,29 +181,15 @@ def recorrer_lugares(grafo, lugares, actual, costo, visitados):
     if len(lugares) == 0:
         return True
 
-    mejor_tiempo = float('inf')
-    ciudad_prox = None
-    mejor_aeropuerto = None
+    ciudad_aleatoria = random.choice(lugares)
+    padres, distancia, peso_total, aeropuerto_destino = camino_minimo(grafo, actual, ciudad_aleatoria, "rapido")
 
+    for key in padres.keys():
+        visitados.append(padres[key])
+    lugares.remove(ciudad_aleatoria)
+    costo += peso_total
 
-    for adyacente in grafo.obtener_vertice_valor(actual).obtener_adyacentes_claves():
-
-        vertice_adyacente = grafo.obtener_vertice_valor(adyacente)
-        if vertice_adyacente.obtener_ciudad() not in lugares:
-            continue
-
-        tiempo_actual = vertice_adyacente.obtener_tiempo(actual)
-        if float(tiempo_actual) < float(mejor_tiempo):
-            mejor_tiempo = tiempo_actual
-            mejor_aeropuerto = adyacente
-            ciudad_prox = vertice_adyacente.obtener_ciudad()
-
-    costo += float(mejor_tiempo)
-    print(ciudad_prox)
-    lugares.remove(ciudad_prox)
-    visitados.append(mejor_aeropuerto)
-
-    return recorrer_lugares(grafo, lugares, mejor_aeropuerto, costo, visitados)
+    return recorrer_lugares(grafo, lugares, aeropuerto_destino, costo, visitados)
 
 
 

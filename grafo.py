@@ -29,7 +29,6 @@ class Grafo(object):
 		for key, value in self.vertices.items():
 			if value.obtener_ciudad() == ciudad:
 				lista_aeropuertos.append(key)
-
 		return lista_aeropuertos
 
 	def obtener_todos_vertices_valores(self):

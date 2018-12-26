@@ -2,6 +2,7 @@
 
 import funciones
 import operator
+import random
 
 ultima_ruta = []
 
@@ -155,23 +156,26 @@ def recorrer_mundo_aprox(grafo, linea):
     parametros = funciones.obtener_parametros(linea)
     origen = parametros[0]
     lugares = []
+
     for vertice in grafo.obtener_todos_vertices_valores():
         lugares.append(vertice.obtener_ciudad())
     visitados = []
     costo = 0
 
-    for aeropuerto in grafo.obtener_aeropuertos(origen):
-        if funciones.recorrer_lugares(grafo, lugares, aeropuerto, costo, visitados):
-            break
+    if len(list(grafo.obtener_aeropuertos(origen))) == 0:
+        return False
 
-    for i in range(0, len(visitados)):
-        if i < len(visitados) - 1:
-            print(visitados[i], end=" ")
+    aeropuerto_random = random.choice(list(grafo.obtener_aeropuertos(origen)))
+    funciones.recorrer_lugares(grafo, lugares, aeropuerto_random, costo, visitados)
+
+    while visitados:
+        aeropuerto = visitados.pop()
+        if len(visitados) > 1:
+            print(aeropuerto, end=" ")
             print(" -> ", end=" ")
         else:
-            print(visitados[i])
+            print(aeropuerto)
     print("Costo: ", costo)
-
     return True
 
 
