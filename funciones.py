@@ -164,7 +164,7 @@ def recorrido_vacaciones(grafo, origen, v, contador, n, visitados):
     if contador == n:
         return True
 
-    for adyacente in grafo.obtener_vertice_valor(v).obtener_adyacentes():
+    for adyacente in grafo.obtener_vertice_valor(v).obtener_adyacentes_claves():
         if adyacente not in visitados:
             if adyacente not in visitados:
                 if contador == n-1:
@@ -234,7 +234,7 @@ def centralidad(grafo):
             cent_aux[padres[w[0]]] += 1
             cent_aux[padres[w[0]]] += cent_aux[w[0]]
 
-        for w in grafo.obtener_todos_vertices().keys():
+        for w in grafo.obtener_todos_vertices_claves():
             if w == key1:
                 continue
             cent[w] += cent_aux[w]
