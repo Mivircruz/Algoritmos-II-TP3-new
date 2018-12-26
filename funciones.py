@@ -169,31 +169,53 @@ def recorrido_vacaciones(grafo, origen, v, contador, n, visitados):
 
     for adyacente in grafo.obtener_vertice_valor(v).obtener_adyacentes_claves():
         if adyacente not in visitados:
-            if adyacente not in visitados:
-                if contador == n-1:
-                    if origen not in grafo.obtener_vertice_valor(adyacente).obtener_adyacentes_claves():
-                        break
-                if recorrido_vacaciones(grafo, origen, adyacente, contador+1, n, visitados):
-                    return True
+            if contador == n-1:
+                if origen not in grafo.obtener_vertice_valor(adyacente).obtener_adyacentes_claves():
+                    break
+            if recorrido_vacaciones(grafo, origen, adyacente, contador+1, n, visitados):
+                return True
     visitados.remove(v)
     return False
 
+
+def reconstruir_camino(origen, destino, padres, visitados, lugares, grafo):
+    v = destino
+    camino = []
+
+    while v != origen:
+        camino.append(v)
+        if grafo.obtener_vertice_valor(v).obtener_ciudad() in lugares:
+            lugares.remove(grafo.obtener_vertice_valor(v).obtener_ciudad())
+        v = padres[v]
+
+    if grafo.obtener_vertice_valor(origen).obtener_ciudad() in lugares:
+        lugares.remove(grafo.obtener_vertice_valor(origen).obtener_ciudad())
+    camino.append(origen)
+    camino.reverse()
+
+    while camino:
+        aeropuerto = camino.pop(0)
+        if visitados:
+            if aeropuerto == visitados[len(visitados)-1]:
+                continue
+        visitados.append(aeropuerto)
+
+    return
 
 def recorrer_lugares(grafo, lugares, actual, costo, visitados):
     if len(lugares) == 0:
         return costo
 
     ciudad_aleatoria = random.choice(lugares)
+    while ciudad_aleatoria not in lugares:
+        ciudad_aleatoria = random.choice(lugares)
+
     padres, distancia, peso_total, aeropuerto_destino = camino_minimo(grafo, actual, ciudad_aleatoria, "rapido")
 
-    for key in padres.keys():
-        visitados.append(key)
-        if grafo.obtener_vertice_valor(key).obtener_ciudad() in lugares:
-            lugares.remove(grafo.obtener_vertice_valor(key).obtener_ciudad())
+    reconstruir_camino(actual, aeropuerto_destino, padres, visitados, lugares, grafo)
     costo += peso_total
 
     return recorrer_lugares(grafo, lugares, aeropuerto_destino, costo, visitados)
-
 
 
 def centralidad(grafo):
