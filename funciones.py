@@ -187,8 +187,9 @@ def recorrer_lugares(grafo, lugares, actual, costo, visitados):
     padres, distancia, peso_total, aeropuerto_destino = camino_minimo(grafo, actual, ciudad_aleatoria, "rapido")
 
     for key in padres.keys():
-        visitados.append(padres[key])
-    lugares.remove(ciudad_aleatoria)
+        visitados.append(key)
+        if grafo.obtener_vertice_valor(key).obtener_ciudad() in lugares:
+            lugares.remove(grafo.obtener_vertice_valor(key).obtener_ciudad())
     costo += peso_total
 
     return recorrer_lugares(grafo, lugares, aeropuerto_destino, costo, visitados)
