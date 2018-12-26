@@ -170,8 +170,7 @@ def recorrido_vacaciones(grafo, origen, v, contador, n, visitados):
                 if contador == n-1:
                     if origen not in grafo.obtener_vertice_valor(adyacente).obtener_adyacentes_claves():
                         break
-                contador += 1
-                if recorrido_vacaciones(grafo, origen, adyacente, contador, n, visitados):
+                if recorrido_vacaciones(grafo, origen, adyacente, contador+1, n, visitados):
                     return True
     visitados.remove(v)
     return False
