@@ -177,7 +177,6 @@ def recorrer_mundo_aprox(grafo, linea):
     print("Costo: ", costo)
     return True
 
-
 def vacaciones(grafo, linea):
 
     #Validación
@@ -259,6 +258,7 @@ def nueva_aerolinea(grafo, linea):
     archivo.close()
     print("OK")
     return True
+
 
 
 def exportar_kml(grafo, linea):
