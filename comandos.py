@@ -238,7 +238,24 @@ def nueva_aerolinea(grafo, linea):
 
     for aeropuerto in arbol.obtener_todos_vertices_claves():
         ultima_ruta.append(aeropuerto)
-        archivo.write(aeropuerto + ',')
+
+    por_visitar = arbol.obtener_todos_vertices_claves()
+    aeropuerto_actual = origen_aleatorio
+    ady_no_visitados = []
+    
+    while por_visitar:
+        if len(ady_no_visitados) > 0:
+            del ady_no_visitados[:]
+        vertice_actual = arbol.obtener_vertice_valor(aeropuerto_actual)
+        for key in vertice_actual.obtener_adyacentes_claves():
+            if key not in por_visitar:
+                continue
+            ady_no_visitados.append(key)
+        adyacente = random.choice(ady_no_visitados)
+        peso = grafo.obtener_peso(aeropuerto_actual, adyacente)
+        archivo.write(aeropuerto_actual+','+adyacente+','+str(peso[0])+'\n')
+        por_visitar.remove(aeropuerto_actual)
+        aeropuerto_actual = adyacente
 
     archivo.close()
     print("OK")

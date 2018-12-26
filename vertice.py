@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import random
+
 class Vertice(object):
 
     def __init__(self, ciudad, latitud, longitud):
@@ -16,6 +18,9 @@ class Vertice(object):
 
     def obtener_ciudad(self):
         return self.ciudad
+
+    def obtener_adyacente_random(self):
+        return random.choice(list(self.adyacentes))
 
     def obtener_adyacentes_claves(self):
         return list(self.adyacentes.keys())
