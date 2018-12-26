@@ -231,30 +231,20 @@ def nueva_aerolinea(grafo, linea):
 
     archivo = open(parametros[0], 'w')
     origen_aleatorio = grafo.obtener_vertice_random()
+    visitados = []
 
     arbol, peso_total = funciones.prim(grafo, origen_aleatorio, "barato")
 
     for aeropuerto in arbol.obtener_todos_vertices_claves():
+        if aeropuerto in visitados:
+            continue
         ultima_ruta.append(aeropuerto)
-
-    por_visitar = arbol.obtener_todos_vertices_claves()
-    aeropuerto_actual = origen_aleatorio
-    ady_no_visitados = []
-    
-    while por_visitar:
-        if len(ady_no_visitados) > 0:
-            del ady_no_visitados[:]
-        vertice_actual = arbol.obtener_vertice_valor(aeropuerto_actual)
-        for key in vertice_actual.obtener_adyacentes_claves():
-            if key not in por_visitar:
+        for adyacente in arbol.obtener_vertice_valor(aeropuerto).obtener_adyacentes_claves():
+            if adyacente in visitados:
                 continue
-            ady_no_visitados.append(key)
-        adyacente = random.choice(ady_no_visitados)
-        peso = grafo.obtener_peso(aeropuerto_actual, adyacente)
-        archivo.write(aeropuerto_actual + ',' + adyacente + ',' + str(peso[0]) + ',' + str(peso[1]) + ',' + str(peso[2]))
-        por_visitar.remove(aeropuerto_actual)
-        aeropuerto_actual = adyacente
-
+            peso = grafo.obtener_peso(aeropuerto, adyacente)
+            archivo.write(aeropuerto + ',' + adyacente + ',' + str(peso[0]) + ',' + str(peso[1]) + ',' + str(peso[2]))
+        visitados.append(aeropuerto)
     archivo.close()
     print("OK")
     return True
