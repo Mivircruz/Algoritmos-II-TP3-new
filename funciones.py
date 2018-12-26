@@ -169,15 +169,13 @@ def recorrido_vacaciones(grafo, origen, v, contador, n, visitados):
 
     for adyacente in grafo.obtener_vertice_valor(v).obtener_adyacentes_claves():
         if adyacente not in visitados:
-            if adyacente not in visitados:
-                if contador == n-1:
-                    if origen not in grafo.obtener_vertice_valor(adyacente).obtener_adyacentes_claves():
-                        break
+            if contador == n-1:
+                if origen not in grafo.obtener_vertice_valor(adyacente).obtener_adyacentes_claves():
+                    break
                 if recorrido_vacaciones(grafo, origen, adyacente, contador+1, n, visitados):
                     return True
     visitados.remove(v)
     return False
-
 
 def recorrer_lugares(grafo, lugares, actual, costo, visitados):
     if len(lugares) == 0:
@@ -187,8 +185,9 @@ def recorrer_lugares(grafo, lugares, actual, costo, visitados):
     padres, distancia, peso_total, aeropuerto_destino = camino_minimo(grafo, actual, ciudad_aleatoria, "rapido")
 
     for key in padres.keys():
-        visitados.append(padres[key])
-    lugares.remove(ciudad_aleatoria)
+        visitados.append(key)
+        if grafo.obtener_vertice_valor(key).obtener_ciudad() in lugares:
+            lugares.remove(grafo.obtener_vertice_valor(key).obtener_ciudad())
     costo += peso_total
 
     return recorrer_lugares(grafo, lugares, aeropuerto_destino, costo, visitados)
