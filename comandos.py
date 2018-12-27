@@ -233,7 +233,7 @@ def nueva_aerolinea(grafo, linea):
     origen_aleatorio = grafo.obtener_vertice_random()
     visitados = []
 
-    arbol = funciones.prim(grafo, origen_aleatorio, "barato")
+    arbol = funciones.prim(grafo, origen_aleatorio)
 
     for aeropuerto in arbol.obtener_todos_vertices_claves():
         if aeropuerto in visitados:
