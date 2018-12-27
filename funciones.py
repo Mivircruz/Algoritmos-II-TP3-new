@@ -116,7 +116,6 @@ def prim(grafo, aeropuerto_origen, modo):
     visitados.append(aeropuerto_origen)
     heap = []
     arbol = g.Grafo()
-    peso_total = 0
 
     for adyacente in grafo.obtener_vertice_valor(aeropuerto_origen).obtener_adyacentes_claves():
         vertice_adyacente = grafo.obtener_vertice_valor(adyacente)
@@ -132,36 +131,29 @@ def prim(grafo, aeropuerto_origen, modo):
 
     while heap:
         v = heapq.heappop(heap)
-        vertice_actual = grafo.obtener_vertice_valor(v[1])
-        ciudad_actual = vertice_actual.obtener_ciudad()
 
-        if ciudad_actual in visitados:
+        if v[1] in visitados:
             continue
 
         if modo == "barato":
             arbol.agregar_arista(v[1], v[2], (0, v[0], 0))
-            peso = vertice_actual.obtener_precio(v[2])
+
         else:
             arbol.agregar_arista(v[1], v[2], (v[0], 0, 0))
-            peso = vertice_actual.obtener_tiempo(v[2])
 
-        peso_total += int(peso)
+        visitados.append(v[1])
 
-        visitados.append(ciudad_actual)
-
-        vertice_actual = grafo.obtener_vertice_valor(v[1])
-        for key in vertice_actual.obtener_adyacentes_claves():
+        for key in grafo.obtener_vertice_valor(v[1]).obtener_adyacentes_claves():
             vertice_adyacente = grafo.obtener_vertice_valor(key)
-            ciudad_adyacente = vertice_adyacente.obtener_ciudad()
 
-            if ciudad_adyacente not in visitados:
-
-                if modo == "barato":
-                    a_guardar = vertice_adyacente.obtener_precio(v[1])
-                else:
-                    a_guardar = vertice_adyacente.obtener_tiempo(v[1])
-                heapq.heappush(heap, (a_guardar, key, v[1]))
-    return arbol, peso_total
+            if key in visitados:
+                continue
+            if modo == "barato":
+                a_guardar = vertice_adyacente.obtener_precio(v[1])
+            else:
+                a_guardar = vertice_adyacente.obtener_tiempo(v[1])
+            heapq.heappush(heap, (a_guardar, key, v[1]))
+    return arbol
 
 
 def recorrido_vacaciones(grafo, origen, v, contador, n, visitados):
