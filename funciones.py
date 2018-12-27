@@ -134,13 +134,18 @@ def prim(grafo, aeropuerto_origen, modo):
         v = heapq.heappop(heap)
         vertice_actual = grafo.obtener_vertice_valor(v[1])
         ciudad_actual = vertice_actual.obtener_ciudad()
+
         if ciudad_actual in visitados:
             continue
 
         if modo == "barato":
             arbol.agregar_arista(v[1], v[2], (0, v[0], 0))
+            peso = vertice_actual.obtener_precio(v[2])
         else:
             arbol.agregar_arista(v[1], v[2], (v[0], 0, 0))
+            peso = vertice_actual.obtener_tiempo(v[2])
+
+        peso_total += int(peso)
 
         visitados.append(ciudad_actual)
 
@@ -155,7 +160,6 @@ def prim(grafo, aeropuerto_origen, modo):
                     a_guardar = vertice_adyacente.obtener_precio(v[1])
                 else:
                     a_guardar = vertice_adyacente.obtener_tiempo(v[1])
-                peso_total += int(a_guardar)
                 heapq.heappush(heap, (a_guardar, key, v[1]))
     return arbol, peso_total
 
